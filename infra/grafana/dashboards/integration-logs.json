@@ -1,0 +1,88 @@
+{
+  "annotations": {"list": []},
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": null,
+  "links": [],
+  "panels": [
+    {
+      "datasource": {"type": "loki", "uid": "loki"},
+      "gridPos": {"h": 14, "w": 24, "x": 0, "y": 0},
+      "id": 1,
+      "options": {
+        "dedupStrategy": "none",
+        "enableInfiniteScrolling": true,
+        "enableLogDetails": true,
+        "prettifyLogMessage": true,
+        "showCommonLabels": false,
+        "showLabels": false,
+        "showTime": true,
+        "sortOrder": "Descending",
+        "wrapLogMessage": true
+      },
+      "targets": [
+        {
+          "datasource": {"type": "loki", "uid": "loki"},
+          "editorMode": "code",
+          "expr": "{compose_project=\"one-c-integration\", compose_service=~\"$service\"} | json",
+          "queryType": "range",
+          "refId": "A"
+        }
+      ],
+      "title": "Все логи сервисов",
+      "type": "logs"
+    },
+    {
+      "datasource": {"type": "loki", "uid": "loki"},
+      "gridPos": {"h": 10, "w": 24, "x": 0, "y": 14},
+      "id": 2,
+      "options": {
+        "dedupStrategy": "none",
+        "enableLogDetails": true,
+        "prettifyLogMessage": true,
+        "showTime": true,
+        "sortOrder": "Descending",
+        "wrapLogMessage": true
+      },
+      "targets": [
+        {
+          "datasource": {"type": "loki", "uid": "loki"},
+          "editorMode": "code",
+          "expr": "{compose_project=\"one-c-integration\", compose_service=~\"$service\"} | json | level=~\"ERROR|WARNING|CRITICAL\"",
+          "queryType": "range",
+          "refId": "A"
+        }
+      ],
+      "title": "Ошибки и предупреждения JSON-логов",
+      "type": "logs"
+    }
+  ],
+  "refresh": "5s",
+  "schemaVersion": 41,
+  "tags": ["1c", "kafka", "postgresql", "logs"],
+  "templating": {
+    "list": [
+      {
+        "allValue": ".*",
+        "current": {"text": "All", "value": "$__all"},
+        "datasource": {"type": "loki", "uid": "loki"},
+        "definition": "label_values({compose_project=\"one-c-integration\"}, compose_service)",
+        "includeAll": true,
+        "label": "Service",
+        "name": "service",
+        "options": [],
+        "query": "label_values({compose_project=\"one-c-integration\"}, compose_service)",
+        "refresh": 2,
+        "regex": "",
+        "sort": 1,
+        "type": "query"
+      }
+    ]
+  },
+  "time": {"from": "now-30m", "to": "now"},
+  "timezone": "browser",
+  "title": "1С Integration — Logs",
+  "uid": "one-c-integration-logs",
+  "version": 1
+}

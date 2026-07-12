@@ -1,0 +1,60 @@
+discovery.docker "integration" {
+  host = "unix:///var/run/docker.sock"
+}
+
+discovery.relabel "integration" {
+  targets = discovery.docker.integration.targets
+
+  rule {
+    source_labels = ["__meta_docker_container_label_com_docker_compose_project"]
+    regex         = "one-c-integration"
+    action        = "keep"
+  }
+
+  rule {
+    source_labels = ["__meta_docker_container_label_com_docker_compose_project"]
+    target_label  = "compose_project"
+  }
+
+  rule {
+    source_labels = ["__meta_docker_container_label_com_docker_compose_service"]
+    target_label  = "compose_service"
+  }
+
+  rule {
+    source_labels = ["__meta_docker_container_name"]
+    regex         = "/(.*)"
+    replacement   = "$1"
+    target_label  = "container"
+  }
+}
+
+loki.source.docker "integration" {
+  host       = "unix:///var/run/docker.sock"
+  targets    = discovery.relabel.integration.output
+  forward_to = [loki.process.integration.receiver]
+}
+
+loki.process "integration" {
+  stage.json {
+    expressions = {
+      level       = "level",
+      app_service = "service",
+    }
+  }
+
+  stage.labels {
+    values = {
+      level       = "level",
+      app_service = "app_service",
+    }
+  }
+
+  forward_to = [loki.write.integration.receiver]
+}
+
+loki.write "integration" {
+  endpoint {
+    url = "http://loki:3100/loki/api/v1/push"
+  }
+}
