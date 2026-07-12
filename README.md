@@ -1,3 +1,36 @@
+# Тестовое задание: 1С → Kafka → PostgreSQL
+
+Рабочий демонстрационный контур: справочники 1С публикуются через HTTP API,
+producer отправляет события в Kafka, а consumer сохраняет состояние в PostgreSQL.
+
+```text
+1С HTTP API → integration-service → Kafka → consumer-service → PostgreSQL
+```
+
+1С запущена на Windows вне Docker. Остальная инфраструктура описана в
+`docker-compose.yml`.
+
+
+## Состав решения
+
+- 1С: справочники «Формы собственности» и «Контрагенты», HTTP JSON API;
+- Apache Kafka 3.8.1, single-node KRaft;
+- PostgreSQL 16 с PK, FK и `INSERT ... ON CONFLICT DO UPDATE`;
+- `integration-service`: full/incremental producer на Python;
+- `consumer-service`: consumer group, retry, DLQ и PostgreSQL upsert;
+- Kafka UI и pgAdmin в базовом запуске Compose;
+- Дополнительно реализованы unit-тесты в `tests/`.# Тестовое задание: 1С → Kafka → PostgreSQL
+
+Рабочий демонстрационный контур: справочники 1С публикуются через HTTP API,
+producer отправляет события в Kafka, а consumer сохраняет состояние в PostgreSQL.
+
+```text
+1С HTTP API → integration-service → Kafka → consumer-service → PostgreSQL
+```
+
+1С запущена на Windows вне Docker. Остальная инфраструктура описана в
+`docker-compose.yml`.
+
 ## Состав решения
 
 - 1С: справочники «Формы собственности» и «Контрагенты», HTTP JSON API;
@@ -15,6 +48,7 @@
 consumer-service/      Kafka → PostgreSQL consumer
 integration-service/   1С HTTP API → Kafka producer
 migrations/            PostgreSQL DDL
+docs/                  Архитектурные решения
 sql/                   SQL-проверки результата
 tests/                 pytest unit-тесты двух сервисов
 ```
