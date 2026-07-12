@@ -45,7 +45,7 @@ tests/                 pytest unit-тесты двух сервисов
 - обработка ошибок через retry и Dead Letter Queue.
 
 Подробное описание архитектуры и принятых решений:
-[docs/architecture.md](docs/architecture.md)
+[docs/architecture.md](docs/architecture.md).
 
 ## Требования
 
