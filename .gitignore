@@ -5,6 +5,5 @@ __pycache__/
 .mypy_cache/
 .venv/
 data/
-_review_assignment/
 test-results/*.xml
 test-results/*.log
