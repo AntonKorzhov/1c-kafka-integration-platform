@@ -174,3 +174,25 @@ configuration.dt
 ```text
 screenshots/
 ```
+
+# Скриншоты 1С
+
+### Структура справочника «Формы собственности»
+
+![ownership-forms](screenshots/02_ownership_form_structure.jpg)
+
+### Структура справочника «Контрагенты»
+
+![counterparty](screenshots/03_counterparty_structure.jpg)
+
+### Данные в справочнике «Формы собственности»
+
+![ownership-form-data](screenshots/04_ownership_forms_data.jpg)
+
+### Данные в справочнике «Контрагенты»
+
+![counterparty-data](screenshots/05_counterparties_data.jpg)
+
+### Результат проверки работы HTTP-сервиса
+
+![HTTP Response](screenshots/06_http_api_response.jpg)
