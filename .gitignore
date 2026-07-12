@@ -1,0 +1,10 @@
+.env
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.venv/
+data/
+_review_assignment/
+test-results/*.xml
+test-results/*.log
